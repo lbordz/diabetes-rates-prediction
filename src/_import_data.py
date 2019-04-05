@@ -72,17 +72,107 @@ def _lower_char_only(x):
     return "".join([letter for letter in x.lower() if letter in chars])
 
 
-#----- IMPORT LIST OF FIPS CODES -----#
+def _remove_county_suffix(x):
+    '''
+    removes words like "county" and "borough" etc from county names. Helpful for aligning
+    county names with FIPS codes.
+    '''
+    if (x.split(" ")[-2].lower() == 'and') and (x.split(" ")[-1].lower() == 'borough'):
+        return " ".join(x.split(" ")[:-3])
+    elif x.split(" ")[-1].lower() in ['county', 'parish', 'borough', 'municipality']:
+        return " ".join(x.split(" ")[:-1])
+    elif (x.split(" ")[-2].lower() == 'census') and (x.split(" ")[-1].lower() == 'area'):
+        return " ".join(x.split(" ")[:-2])
+    else:
+        return " ".join(x.split(" "))
+
+
+
+#----- IMPORT CENSUS DATA  -----#
+
+
+def import_census_data(filepath):
+    census = pd.read_csv(filepath, encoding = "ISO-8859-1")
+
+    #filter for year = 2010
+    census = census[census['YEAR'] == 1]
+
+    #prepare census to merge with fips dataframe to get fips codes
+    # --> replace specific county names to make them match fips dataframe
+    census_changes = {"Kusilvak Census Area": "Wade Hampton Census Area",
+             "District of Columbia" : "Washington County",
+             "Doña Ana County" : "Dona Ana County",
+            "Oglala Lakota County" : "Shannon County" }
+    _replace_specific_values(census, "CTYNAME", census_changes)
+    # --> remove "county" suffix and all non-lowercase characters
+    census["ctynameshort"] = census["CTYNAME"].apply(_remove_county_suffix)
+    census['ctynameshort'] = census['ctynameshort'].apply(_lower_char_only)
+
+    #add fips codes
+    fips = import_master_fips_list()
+    census = census.merge(fips,  left_on = ["STNAME", "ctynameshort"], right_on = ["StateName","countyshort"], how = "left")
+
+    #change names of ages
+    age_changes = {
+    0: "AgeTotal",
+    1: "AgeGrp01:0-4:2010",
+    2: "AgeGrp02:5-9:2010",
+    3: "AgeGrp03:10-14:2010",
+    4: "AgeGrp04:15-19:2010",
+    5: "AgeGrp05:20-24:2010",
+    6: "AgeGrp06:25-29:2010",
+    7: "AgeGrp07:30-34:2010",
+    8: "AgeGrp08:35-39:2010",
+    9: "AgeGrp09:40-44:2010",
+    10: "AgeGrp10:45-49:2010",
+    11: "AgeGrp11:50-54:2010",
+    12: "AgeGrp12:55-59:2010",
+    13: "AgeGrp13:60-64:2010",
+    14: "AgeGrp14:65-69:2010",
+    15: "AgeGrp15:70-74:2010",
+    16: "AgeGrp16:75-79:2010",
+    17: "AgeGrp17:80-84:2010",
+    18: "AgeGrp18:85+:2010",
+    }
+    _replace_specific_values(census, "AGEGRP", age_changes)
+
+    #make a separate dataframe with one column for every age group
+    age_df = census[["FIPS", "AGEGRP", "TOT_POP"]]
+    age_df = age_df.set_index(['FIPS', 'AGEGRP'])
+    age_df = age_df.unstack()
+    age_df.columns = age_df.columns.droplevel()
+    age_df = age_df.drop("AgeTotal", axis = 1)
+    age_df = age_df.reset_index()
+
+    #create a dataframe of just year = 0 as master
+    census = census[census['AGEGRP'] == "AgeTotal"]
+    census = census.merge(age_df, on = "FIPS", how = 'outer')
+
+    #select only desired columns
+    desired_columns = ['STNAME', 'CTYNAME', 'FIPS', 'TOT_POP', 'TOT_MALE', 'WAC_MALE', 'WAC_FEMALE',
+       'BAC_MALE', 'BAC_FEMALE', 'IAC_MALE', 'IAC_FEMALE', 'AAC_MALE',
+       'AAC_FEMALE', 'NAC_MALE', 'NAC_FEMALE','H_MALE', 'H_FEMALE', 'AgeGrp01:0-4:2010', 'AgeGrp02:5-9:2010',
+       'AgeGrp03:10-14:2010', 'AgeGrp04:15-19:2010', 'AgeGrp05:20-24:2010',
+       'AgeGrp06:25-29:2010', 'AgeGrp07:30-34:2010', 'AgeGrp08:35-39:2010',
+       'AgeGrp09:40-44:2010', 'AgeGrp10:45-49:2010', 'AgeGrp11:50-54:2010',
+       'AgeGrp12:55-59:2010', 'AgeGrp13:60-64:2010', 'AgeGrp14:65-69:2010',
+       'AgeGrp15:70-74:2010', 'AgeGrp16:75-79:2010', 'AgeGrp17:80-84:2010',
+       'AgeGrp18:85+:2010']
+
+    return census[desired_columns]
+
+
+
+
+    census = census.merge(fips[['StateCounty', "fips", "state", "county", 'census_CTYNAME']], on = "StateCounty", how = 'left')
+
+def _match_census_counties():
 
 
 
 
 
-
-
-
-
-#----- IMPORT LIST OF FIPS CODES -----#
+#----- IMPORT FIPS CODES; NEEDED FOR CENSUS AND ___ DATA -----#
 
 
 
@@ -287,10 +377,3 @@ def import_food_env_data(filepath, desired_columns):
         final_df = pd.merge(final_df, df)
 
     return final_df
-
-
-
-#----- IMPORT FIPS CODES; NEEDED FOR CENSUS AND ___ DATA -----#
-
-
-string.ascii_uppercase
