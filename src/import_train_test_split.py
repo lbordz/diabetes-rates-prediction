@@ -89,80 +89,13 @@ merged_df.to_csv('../data/ALL_MERGED_DATA.csv')
 
 #  --- TRAIN TEST  SPLIT  ---
 
-X = merged_df.drop(['Diabetes_pct_growth_rate','State_master', 'FIPS_master', 'County_master'], axis = 1)
+X = merged_df.drop(['Diabetes_pct_growth_rate', 'FIPS_master', 'County_master'], axis = 1)
 y = merged_df['Diabetes_pct_growth_rate']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=30)
 
 #export all training and test sets. Only training to be used for model selection and fitting.
-X_train.to_csv('../data/X_train.csv')
-X_test.to_csv('../data/X_test.csv')
-y_train.to_csv('../data/y_train.csv')
-y_test.to_csv('../data/y_test.csv')
-
-
-
-'''
-
-LATER:
-#CHANGE DIABETES GROWTH TO --> % POPULATION THAT IS NEW TO DIABETES? (i.e. total diabetes pop #s?)
-
-#per second pass, adding Diabetes growth rate TARGET
-
-#new for third pass: adding percent increase 2009-2010
-third_pass['DDP:2009-2010:Growth_Rate'] = (third_pass["DDP:2010:percent.6"] - third_pass["DDP:2009:percent.5"]) / third_pass["DDP:2009:percent.5"]
-
-ob2['OB:2009-2010:Change_rate'] = ( ob2['OB:2010:percent'] - ob2['OB:2009:percent'] ) / ob2['OB:2009:percent']
-
-#create % male population
-census["Male_pct_2010"] =  (census["TOT_MALE"] / census["TOT_POP"])*100
-
-creating not M/F census_
-r_e_df['CEN:2010:WA'] = (r_e_df['WA_MALE'] + r_e_df['WA_FEMALE']) / r_e_df["TOT_POP"]
-r_e_df['CEN:2010:BA'] = (r_e_df['BA_MALE'] + r_e_df['BA_FEMALE']) / r_e_df["TOT_POP"]
-r_e_df['CEN:2010:IA'] = (r_e_df['IA_MALE'] + r_e_df['IA_FEMALE']) / r_e_df["TOT_POP"]
-r_e_df['CEN:2010:AA'] = (r_e_df['AA_MALE'] + r_e_df['AA_FEMALE']) / r_e_df["TOT_POP"]
-r_e_df['CEN:2010:NA'] = (r_e_df['NA_MALE'] + r_e_df['NA_FEMALE']) / r_e_df["TOT_POP"]
-r_e_df['CEN:2010:WAC'] = (r_e_df['WAC_MALE'] + r_e_df['WAC_FEMALE']) / r_e_df["TOT_POP"]
-r_e_df['CEN:2010:BAC'] = (r_e_df['BAC_MALE'] + r_e_df['BAC_FEMALE']) / r_e_df["TOT_POP"]
-r_e_df['CEN:2010:IAC'] = (r_e_df['IAC_MALE'] + r_e_df['IAC_FEMALE']) / r_e_df["TOT_POP"]
-r_e_df['CEN:2010:AAC'] = (r_e_df['AAC_MALE'] + r_e_df['AAC_FEMALE']) / r_e_df["TOT_POP"]
-r_e_df['CEN:2010:NAC'] = (r_e_df['NAC_MALE'] + r_e_df['NAC_FEMALE']) / r_e_df["TOT_POP"]
-r_e_df['CEN:2010:H'] = (r_e_df['H_MALE'] + r_e_df['H_FEMALE']) / r_e_df["TOT_POP"]
-
-Age:
-Age:0-14', 'Age:15-24', 'Age:25-44',
-'Age:45+'
-
-
-#changed for rural:
-#Kusilvak --> 2158 to 2270
-#Oglala --> 46102 to 46113
-
-
-
-#WILL NEED A PLAN FOR MISSING UNEMPLYOMENT RATE, AND MSSING POVERTY RATE
-
-#5 big_df.loc[[86, 87, 94, 95, 322, 551, 2420]][["FIPS_y", "CountyState", "UnemploymentRate:2010" ]]
-#1 big_df.loc[322][["FIPS_y", "State_y", "County_y", "Poverty_Rate_2010"]]
-
-'''
-
-'''
-Al files:
-CDC:
-# - Diabetes   'DDP:2010:percent.6', 'DDP:2009-2010:Growth_Rate', *TARGET*
-# - obesity    OB:2010:percent', 'OB:2009-2010:Change_rate'
-# - inactivity  LI:2010:percent
-
-## Poverty   'Poverty Rate 2010''
-## unemployment   '2010:UnemploymentRate'
-# foodenvatlas   ''FFRPTH09', PCT_LACCESS_POP10'
-# rural   Rural_Pct_2010
-# alcohol   'Alcohol:Any:2010', 'Alcohol:Heavy:2010',
-# (fips)  (States?)
-# census  'pct_male', 'CEN:2010:BAC', 'CEN:2010:IAC',
-'CEN:2010:AAC', 'CEN:2010:NAC', 'CEN:2010:H','Age:0-14', 'Age:15-24', 'Age:25-44',
-'Age:45+'
-
-'''
+X_train.to_csv('../data/X_train.csv', index = False)
+X_test.to_csv('../data/X_test.csv', index = False)
+y_train.to_csv('../data/y_train.csv', index = False, header = ["y_train"])
+y_test.to_csv('../data/y_test.csv', index = False, header = ["y_test"])
