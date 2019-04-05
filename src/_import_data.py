@@ -11,9 +11,9 @@ CDC:
 # - obesity    OB:2010:percent', 'OB:2009-2010:Change_rate'
 # - inactivity  LI:2010:percent
 
-# Poverty   'Poverty Rate 2010''
-# unemployment   '2010:UnemploymentRate'
-foodenvatlas   ''FFRPTH09', PCT_LACCESS_POP10'
+## Poverty   'Poverty Rate 2010''
+## unemployment   '2010:UnemploymentRate'
+# foodenvatlas   ''FFRPTH09', PCT_LACCESS_POP10'
 rural   Rural_Pct_2010
 alcohol   'Alcohol:Any:2010', 'Alcohol:Heavy:2010',
 (fips)  (States?)
@@ -167,3 +167,54 @@ def import_unemployment_data(filedir):
     master_df.columns = ["FIPS", "CountyState", "UnemploymentRate:2010"]
 
     return master_df
+
+
+
+#----- IMPORT DESIRED FOOD ENVIRONMENT ATLAS RATE DATA FROM FILE-----#
+
+
+
+def _food_env_get_sheetnum(filepath, desired_columns):
+    '''
+    find sheets associated with desired columns(), return a dictionary {column name: sheet number}
+    '''
+    sheetnums = {}
+    found = 0
+    for i in range (2, 12):
+        sheet = pd.read_excel(filepath, sheet_name = i)
+        for col in desired_columns:
+            if col in sheet.columns:
+                found += 1
+                sheetnums[col] = i
+                if found == len(desired_columns):
+                    return sheetnums
+    return sheetnums
+
+
+def import_food_env_data(filepath, desired_columns):
+    '''
+    put desired columns from food atlas into one dataframe
+    '''
+    sheetnums = _food_env_get_sheetnum(filepath, ['PCT_LACCESS_POP10', 'FFRPTH09'])
+
+    #create separate dataframe for each column, prepare to merge on FIPS as index
+    dfs = []
+    for col in sheetnums.keys():
+        df = pd.read_excel(filepath, sheet_name = sheetnums[col])
+        df = df[['FIPS', 'State', 'County', col ]]
+        df.set_index('FIPS')
+        dfs.append(df)
+
+    #merge all dataframes on index (=FIPS)
+    final_df = dfs[0]
+    for df in dfs[1:]:
+        final_df = pd.merge(final_df, df)
+
+    return final_df
+
+
+
+#----- IMPORT FIPS CODES; NEEDED FOR CENSUS AND ___ DATA -----#
+
+
+string.ascii_uppercase
