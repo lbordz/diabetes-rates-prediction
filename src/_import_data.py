@@ -16,7 +16,7 @@ CDC:
 ## Poverty   'Poverty Rate 2010''
 ## unemployment   '2010:UnemploymentRate'
 # foodenvatlas   ''FFRPTH09', PCT_LACCESS_POP10'
-rural   Rural_Pct_2010
+# rural   Rural_Pct_2010
 alcohol   'Alcohol:Any:2010', 'Alcohol:Heavy:2010',
 # (fips)  (States?)
 # census  'pct_male', 'CEN:2010:BAC', 'CEN:2010:IAC',
@@ -86,6 +86,82 @@ def _remove_county_suffix(x):
     else:
         return " ".join(x.split(" "))
 
+def _create_ctynameshort(df, original_column):
+    '''
+    creates a new column called "ctynameshort" in the dataframe that can be matched with the same colume in the fips datafram
+    '''
+    df["ctynameshort"] = df[original_column].apply(_remove_county_suffix)
+    df['ctynameshort'] = df['ctynameshort'].apply(_lower_char_only)
+    return df
+
+
+#----- IMPORT ALCOHOL DATA  -----#
+
+def import_alc_data(filepath):
+    #Get "Any Drinking" columns
+    alc_any = pd.read_excel(filepath, sheet_name = "Any")
+    alc_any = alc_any[['State', 'Location', '2010 Both Sexes']]
+    alc_any.columns = ['State', 'Location', 'Alcohol:Any:2010']
+    # --> Remove rows  that are not on the county level
+    alc_any = alc_any[alc_any['State'] != alc_any['Location']]
+
+    #Get "Heavy Drinking" columns
+    alc_heavy = pd.read_excel(filepath, sheet_name = "Heavy")
+    alc_heavy = alc_heavy[['State', 'Location', '2010 Both Sexes']]
+    alc_heavy.columns = ['State', 'Location', 'Alcohol:Heavy:2010']
+    # --> Remove rows  that are not on the county level
+    alc_heavy = alc_heavy[alc_heavy['State'] != alc_heavy['Location']]
+
+    #merge any and heavy drinking into one DataFrame
+    alc = pd.merge(alc_any, alc_heavy, on = ["State", "Location"])
+
+    #remove national row
+    alc = alc[alc['State'] != "National"]
+
+    #Break Apart rows with several locations
+    # --> 1, identify rows with several locations
+    alc_together_counties = alc[alc['Location'].str.contains(",")]
+    # --> 2, remove those rows from main dataframe
+    alc = alc[~alc['Location'].str.contains(",")]
+    # --> 3, break rows with several locations apart and add to main dataframe
+    for i in range(alc_together_counties.shape[0]):
+        row = alc_together_counties.iloc[i]
+        locations = row['Location'].split(", ")
+        for location in locations:
+            alc = alc.append(pd.DataFrame([[row['State'], location, row['Alcohol:Any:2010'], row['Alcohol:Heavy:2010'] ]], columns = alc.columns ))
+
+    #prepare alc for fips matching with new columns
+    # --> 1, change out names to match
+    alc_changes_loc = {
+        "District of Columbia": "Washington County"
+        }
+    alc_changes_st = {
+        "District Of Columbia": "District of Columbia"
+        }
+    _replace_specific_values(alc, "Location", alc_changes_loc)
+    _replace_specific_values(alc, "State", alc_changes_st)
+    # --> 2, create new column to match with fips
+    alc = _create_ctynameshort(alc, "Location")
+
+    #add fips column
+    fips = import_master_fips_list()
+    alc = alc.merge(fips[["StateName","countyshort", "FIPS"]],  left_on = ["State", "ctynameshort"], right_on = ["StateName","countyshort"], how = "left")
+
+    #choose desired_columns
+    alc = alc[['State', 'Location', 'Alcohol:Any:2010', 'Alcohol:Heavy:2010']]
+    alc.columns = ['State', 'CountyName', 'Alcohol:Any:2010', 'Alcohol:Heavy:2010']
+
+    return alc
+
+
+
+
+
+    fips = import_master_fips_list()
+    census = census.merge(fips,  left_on = ["STNAME", "ctynameshort"], right_on = ["StateName","countyshort"], how = "left")
+
+
+
 
 
 #----- IMPORT RURAL DATA  -----#
@@ -126,8 +202,10 @@ def import_census_data(filepath):
             "Oglala Lakota County" : "Shannon County" }
     _replace_specific_values(census, "CTYNAME", census_changes)
     # --> remove "county" suffix and all non-lowercase characters
-    census["ctynameshort"] = census["CTYNAME"].apply(_remove_county_suffix)
-    census['ctynameshort'] = census['ctynameshort'].apply(_lower_char_only)
+
+    census = _create_ctynameshort(census, "CTYNAME")
+    # census["ctynameshort"] = census["CTYNAME"].apply(_remove_county_suffix)
+    # census['ctynameshort'] = census['ctynameshort'].apply(_lower_char_only)
 
     #add fips codes
     fips = import_master_fips_list()
@@ -185,9 +263,6 @@ def import_census_data(filepath):
 
 
 
-    census = census.merge(fips[['StateCounty', "fips", "state", "county", 'census_CTYNAME']], on = "StateCounty", how = 'left')
-
-def _match_census_counties():
 
 
 
