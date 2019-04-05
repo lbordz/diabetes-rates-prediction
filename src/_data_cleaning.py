@@ -14,8 +14,6 @@ def _drop_cols(df, col_names):
         df = df.drop(col, axis = 1)
     return df
 
-def _replace_null_w_avg(df, col):
-    df[df[col].isnull]
 
 ## ------ CLEANING FEATURES ----- #
 
