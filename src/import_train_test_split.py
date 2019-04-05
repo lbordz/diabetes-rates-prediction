@@ -84,7 +84,7 @@ desired_merged_columns = ['State_master', 'FIPS_master', 'County_master', 'DB:20
 merged_df = merged_df[desired_merged_columns]
 
 #export all final data (to be used for visualizations, plotting, etc)
-merged_df.to_csv('../data/ALL_MERGED_DATA.csv')
+merged_df.to_csv('../data/ALL_MERGED_DATA.csv', index = False)
 
 
 #  --- TRAIN TEST  SPLIT  ---

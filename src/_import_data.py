@@ -6,24 +6,6 @@ import string
 import requests
 from bs4 import BeautifulSoup
 
-'''
-Al files:
-CDC:
-# - Diabetes   'DDP:2010:percent.6', 'DDP:2009-2010:Growth_Rate', *TARGET*
-# - obesity    OB:2010:percent', 'OB:2009-2010:Change_rate'
-# - inactivity  LI:2010:percent
-
-## Poverty   'Poverty Rate 2010''
-## unemployment   '2010:UnemploymentRate'
-# foodenvatlas   ''FFRPTH09', PCT_LACCESS_POP10'
-# rural   Rural_Pct_2010
-alcohol   'Alcohol:Any:2010', 'Alcohol:Heavy:2010',
-# (fips)  (States?)
-# census  'pct_male', 'CEN:2010:BAC', 'CEN:2010:IAC',
-'CEN:2010:AAC', 'CEN:2010:NAC', 'CEN:2010:H','Age:0-14', 'Age:15-24', 'Age:25-44',
-'Age:45+'
-
-'''
 
 
 #----- SUPPORTING FUNCTIONS-----#
@@ -148,17 +130,13 @@ def import_alc_data(filepath):
     alc = alc.merge(fips[["StateName","countyshort", "FIPS"]],  left_on = ["State", "ctynameshort"], right_on = ["StateName","countyshort"], how = "left")
 
     #choose desired_columns
-    alc = alc[['State', 'Location', 'Alcohol:Any:2010', 'Alcohol:Heavy:2010']]
-    alc.columns = ['State', 'CountyName', 'Alcohol:Any:2010', 'Alcohol:Heavy:2010']
+    alc = alc[['State', 'Location', "FIPS", 'Alcohol:Any:2010', 'Alcohol:Heavy:2010']]
+    alc.columns = ['State', 'CountyName', "FIPS", 'Alcohol:Any:2010', 'Alcohol:Heavy:2010']
+
+    alc["FIPS"] = pd.to_numeric(alc["FIPS"])
 
     return alc
 
-
-
-
-
-    fips = import_master_fips_list()
-    census = census.merge(fips,  left_on = ["STNAME", "ctynameshort"], right_on = ["StateName","countyshort"], how = "left")
 
 
 
@@ -181,8 +159,9 @@ def import_rural_data(filepath):
     rural_data = rural_data[["2015 GEOID", "State", "2015 Geography Name", '2010 Census \nPercent Rural']]
     rural_data.columns = ["FIPS", "StateAbbr", "CountyState2015", "Rural_percent_2010"]
 
-    return rural_data
+    rural_data["FIPS"] = pd.to_numeric(rural_data["FIPS"])
 
+    return rural_data
 
 
 #----- IMPORT CENSUS DATA  -----#
@@ -247,6 +226,9 @@ def import_census_data(filepath):
     census = census[census['AGEGRP'] == "AgeTotal"]
     census = census.merge(age_df, on = "FIPS", how = 'outer')
 
+    #change fips to number
+    census["FIPS"] = pd.to_numeric(census["FIPS"])
+
     #select only desired columns
     desired_columns = ['STNAME', 'CTYNAME', 'FIPS', 'TOT_POP', 'TOT_MALE', 'WAC_MALE', 'WAC_FEMALE',
        'BAC_MALE', 'BAC_FEMALE', 'IAC_MALE', 'IAC_FEMALE', 'AAC_MALE',
@@ -257,6 +239,8 @@ def import_census_data(filepath):
        'AgeGrp12:55-59:2010', 'AgeGrp13:60-64:2010', 'AgeGrp14:65-69:2010',
        'AgeGrp15:70-74:2010', 'AgeGrp16:75-79:2010', 'AgeGrp17:80-84:2010',
        'AgeGrp18:85+:2010']
+
+
 
     return census[desired_columns]
 
@@ -363,6 +347,8 @@ def import_diabetes_data(filepath):
     for col in diab_data.columns[3:]:
         diab_data[col] = pd.to_numeric(diab_data[col], errors = 'coerce')
 
+    diab_data.columns = ["State_master", "FIPS_master", "County_master", "DB:2009:percent", "DB:2010:percent", "DB:2013:percent"]
+
     return diab_data
 
 
@@ -429,6 +415,8 @@ def import_unemployment_data(filedir):
     #select columns
     master_df = master_df[["FIPS", "Name", "2010:UnemploymentRate"]]
     master_df.columns = ["FIPS", "CountyState", "UnemploymentRate:2010"]
+
+    master_df['FIPS'] = master_df["FIPS"].astype(int)
 
     return master_df
 
