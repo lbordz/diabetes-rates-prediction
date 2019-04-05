@@ -2,7 +2,9 @@ import pandas as pd
 import numpy as np
 from os import listdir
 from os.path import isfile, join
-
+import string
+import requests
+from bs4 import BeautifulSoup
 
 '''
 Al files:
@@ -16,12 +18,16 @@ CDC:
 # foodenvatlas   ''FFRPTH09', PCT_LACCESS_POP10'
 rural   Rural_Pct_2010
 alcohol   'Alcohol:Any:2010', 'Alcohol:Heavy:2010',
-(fips)  (States?)
+# (fips)  (States?)
 census  'pct_male', 'CEN:2010:BAC', 'CEN:2010:IAC',
 'CEN:2010:AAC', 'CEN:2010:NAC', 'CEN:2010:H','Age:0-14', 'Age:15-24', 'Age:25-44',
 'Age:45+'
 
 '''
+
+
+#----- SUPPORT FUNCTIONS-----#
+
 
 #Function to import diabetes, leisure inactiity, and obesity data
 
@@ -47,6 +53,78 @@ def _import_CDC_data(filepath, abbr):
         new_col_names[i] = new_col_names[i][:-2]  #removing the numbers at the end of column names
     data_df.columns = new_col_names
     return data_df
+
+
+def _replace_specific_values(df, col, from_to_dict):
+    '''
+    overwrites very specific values in a dataframe
+    (useful for switching out specific county names, etc, to make everything match up)
+    '''
+    for item in from_to_dict.keys():
+        value_index = df[df[col] == item].index
+        df.loc[value_index, col] = from_to_dict[item]
+
+def _lower_char_only(x):
+    '''
+    transformation function: returns string with only lowercase letters (no spaces)
+    '''
+    chars = string.ascii_lowercase
+    return "".join([letter for letter in x.lower() if letter in chars])
+
+
+#----- IMPORT LIST OF FIPS CODES -----#
+
+
+
+
+
+
+
+
+
+#----- IMPORT LIST OF FIPS CODES -----#
+
+
+
+def import_master_fips_list():
+    #get fips information from url
+    url = 'https://www.nrcs.usda.gov/wps/portal/nrcs/detail/national/home/?cid=nrcs143_013697'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "lxml")
+    table = soup.find("div", class_ = "centerColImg")
+    #set column names for dataframe
+    col_names = [x.text.replace("\r\n\t\t\t\t", "") for x in table.find('tr').find_all('th')]
+    col_names[1] = "CountyName"
+    #create rows for dataframe
+    rows = []
+    for tr in table.find_all('tr')[1:]:
+        rows.append([x.text.replace("\r\n\t\t\t\t", "") for x in tr.find_all('td')])
+    #create fips table
+    fips = pd.DataFrame(rows, columns = col_names)
+    #custom: add missing fips codes
+    additional_fips = pd.DataFrame(
+        np.array([["02105", "Hoonah-Angoon", "AK"],
+                  ["02195", "Petersburg", "AK"],
+                  ["02198", "Prince of Wales-Hyder", "AK"],
+                  ["02230", "Skagway", "AK"],
+                  ["02275", "Wrangell", "AK"],
+                  ["08014", "Broomfield", "CO"],
+                  ["12086", "Miami-Dade", "FL"],
+                  ["15005", "Kalawao", "HI"]]),
+        columns=['FIPS', 'CountyName', 'State'])
+    fips = pd.concat([fips,additional_fips ], axis = 0).reset_index(drop = True)
+    #custom: change typo
+    fips_changes = {"Colonial Heights Cit" : "Colonial Heights City"}
+    _replace_specific_values(fips, "CountyName", fips_changes)
+
+    #add state names
+    state_names = pd.read_csv('../data/raw_data/state_abbr.csv')
+    fips = fips.merge(state_names, left_on = 'State', right_on = "abbr").drop("abbr", axis = 1)
+
+    #add column of just lowercase character-only county names
+    fips['countyshort'] = fips['CountyName'].apply(_lower_char_only)
+
+    return fips
 
 
 
@@ -196,7 +274,6 @@ def import_food_env_data(filepath, desired_columns):
     put desired columns from food atlas into one dataframe
     '''
     sheetnums = _food_env_get_sheetnum(filepath, ['PCT_LACCESS_POP10', 'FFRPTH09'])
-
     #create separate dataframe for each column, prepare to merge on FIPS as index
     dfs = []
     for col in sheetnums.keys():
@@ -204,7 +281,6 @@ def import_food_env_data(filepath, desired_columns):
         df = df[['FIPS', 'State', 'County', col ]]
         df.set_index('FIPS')
         dfs.append(df)
-
     #merge all dataframes on index (=FIPS)
     final_df = dfs[0]
     for df in dfs[1:]:
