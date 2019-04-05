@@ -19,14 +19,14 @@ CDC:
 rural   Rural_Pct_2010
 alcohol   'Alcohol:Any:2010', 'Alcohol:Heavy:2010',
 # (fips)  (States?)
-census  'pct_male', 'CEN:2010:BAC', 'CEN:2010:IAC',
+# census  'pct_male', 'CEN:2010:BAC', 'CEN:2010:IAC',
 'CEN:2010:AAC', 'CEN:2010:NAC', 'CEN:2010:H','Age:0-14', 'Age:15-24', 'Age:25-44',
 'Age:45+'
 
 '''
 
 
-#----- SUPPORT FUNCTIONS-----#
+#----- SUPPORTING FUNCTIONS-----#
 
 
 #Function to import diabetes, leisure inactiity, and obesity data
@@ -85,6 +85,27 @@ def _remove_county_suffix(x):
         return " ".join(x.split(" ")[:-2])
     else:
         return " ".join(x.split(" "))
+
+
+
+#----- IMPORT RURAL DATA  -----#
+
+def import_rural_data(filepath):
+    rural_data = pd.read_excel(filepath, skiprows=3)
+    #remove rows with notes
+    rural_data = rural_data[rural_data['State'].isnull() == False]
+    #make changes to mach fips up
+    rural_changes = {
+    '02158' : '02270',
+    '46102' : '46113'
+    }
+    _replace_specific_values(rural_data, "2015 GEOID", rural_changes)
+
+    #select and rename desired columns
+    rural_data = rural_data[["2015 GEOID", "State", "2015 Geography Name", '2010 Census \nPercent Rural']]
+    rural_data.columns = ["FIPS", "StateAbbr", "CountyState2015", "Rural_percent_2010"]
+
+    return rural_data
 
 
 
