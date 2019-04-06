@@ -79,7 +79,6 @@ if __name__ == '__main__':
 
 '''
 
-from sklearn.preprocessing import StandardScaler
 
 
 def scale_data()
