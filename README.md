@@ -6,7 +6,7 @@ Diabetes is a big and growing health problem in the US. About 30% of the US popu
 
 
 
- <img src="/images/Diabetes_growth_1958_2015.png" width="600px" align="middle">
+             <img src="/images/Diabetes_growth_1958_2015.png" width="600px" align="middle">
 
 
 
@@ -21,10 +21,6 @@ Type 2 diabetes, which generally onsets in adulthood, accounts for 95% of all ca
 
 **Government policies are one of the tools we have to enact wide-spread change to curb diabetes. However, what policies should we enact? And what locations should be prioritize?**
  
-
-<br/><br/>
-
-TEST
 
 &nbsp;
 &nbsp;
@@ -45,7 +41,7 @@ Specifically: I will use county-level population data available in 2010 and prio
 
 ## Data
 
-I collected potentially relevant US county-level population statistics from several sources to serve as inputs to my model. 
+I collected US county-level population statistics from several sources to serve as inputs to my model. 
 
  - **Sources:** The Center for Disease Control (CDC), the US Census Bureau (2009 & 2010), the Bureau of Labor Statistics (BLA), The Institute for Health Metrics and Evalation (IHME), and the US Department of Agriculture (USDA)
 
