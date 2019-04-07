@@ -19,6 +19,6 @@ Predicting the rate of diabetes on the county level
 
 
 
-<img src="/images/Diabetes_growth_1958_2015.png"  max-width = "80%">
+<img src="/images/Diabetes_growth_1958_2015.png"  max-width = "50%">
 
 
