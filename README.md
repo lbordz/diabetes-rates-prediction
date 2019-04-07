@@ -9,9 +9,12 @@ Diabetes is a big and growing health problem in the US. About 30% of the US popu
 Predicting the rate of diabetes on the county level
 
 
-![](https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png | width=100)
+![](https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png?raw=true | width=100)
 
 
-![alt text](/images/Diabetes_growth_1958_2015.png "Title" | width=100)
+![alt text](/images/Diabetes_growth_1958_2015.png "Title" )
+
+<img src="/images/Diabetes_growth_1958_2015.png" width="48">
+
 
 
