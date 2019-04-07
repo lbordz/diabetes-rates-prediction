@@ -13,13 +13,13 @@ Predicting the rate of diabetes on the county level
 
 <div text-align = "center">
 
-
-
-</div>
-
-
 <div style="display: flex; justify-content: center;">
   <img src="/images/Diabetes_growth_1958_2015.png" width="600px" align="middle">
 </div>
+
+</div>
+
+
+
 
 
