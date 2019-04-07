@@ -11,10 +11,15 @@ Predicting the rate of diabetes on the county level
 
 ![](https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png?raw=true | width=100)
 
+<div text-align = "center">
 
 
-<img src="/images/Diabetes_growth_1958_2015.png" width="600px" align="middle">
+
+</div>
 
 
+<div style="display: flex; justify-content: center;">
+  <img src="/images/Diabetes_growth_1958_2015.png" width="600px" align="middle">
+</div>
 
 
