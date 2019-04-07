@@ -14,7 +14,11 @@ Predicting the rate of diabetes on the county level
 
 ![alt text](/images/Diabetes_growth_1958_2015.png "Title" )
 
-<img src="/images/Diabetes_growth_1958_2015.png" width="48">
+<img src="/images/Diabetes_growth_1958_2015.png" width="48px">
 
+
+
+
+<img src="/images/Diabetes_growth_1958_2015.png"  max-width = 80%">
 
 
