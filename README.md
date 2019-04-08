@@ -30,7 +30,7 @@ Type 2 diabetes, which generally onsets in adulthood, accounts for 95% of all ca
 
 **Predict how much the diabetes rate for specific geographic population will change in 3 years.**
 
-Specifically: I will use county-level population data available in 2010 and prior to predict how much the diabetes rate in each county will have changed in 2013.
+Specifically: I will use county-level population data available in 2010 and prior to predict the percent change in the diabetes rate in each county from 2010-2013. 
 
 *Why?*  If we can correctly predict which geographic areas are likely to see the highest growth in diabe tes rates, and understand some of the contributing factors, we can gain insight into what types of government policies we should enact, and where. 
 
@@ -65,3 +65,80 @@ I collected US county-level population statistics from several sources to serve 
       - Fast-Food defined as establishments that primarily provide food, where patrons generally order or select items and pay before eating.
     - Low access to a supermarket or large grocery store (USDA)
       - Low access defined as 1+ miles away from a store in urban areas, 10+ miles away in rural areas 
+
+
+
+&nbsp;
+&nbsp;
+
+## Process Overview
+
+1 - Gather and combine data into one dataframe; Export all data into one master file for exploratory data analysis, and create separate files with training data and test-set for model selection and evaluation. 
+ - The input and target data was in 9 different xlsx/csv files. I manipulated all data so it could be merged into one dataframe, with one row per county. The final dataframe had data for all 3,142 unique counties and county-equivalents (parishes, boroughs, census areas, etc) in the 50 states and District of Columbia. 
+ - The code for this process appears in `src/import_test_train_split.py`
+
+2 - Exploratory data analysis
+(more on this bleow)
+ - The code for this process appears in `XXXXX`
+
+3 - Model Selection
+(more on this below)
+ - The code for this process appears in `XXXXX`
+
+4 - Model Insights
+(more on this bleow)
+ - The code for this process appears in `XXXXX`
+
+
+
+- How did you go about solving your problem? What choices did you make?
+(Choices - make missing values average - so few missing)
+(Choices - knowing using lasso and looking at feature importance, didnt want highly correlated vaiables. So I noted which ones higly correlated, saw which one performed better, thats it)
+(Choices -Lasso--> made some zero, performed better, also at same performance (basically), fewer features with higher coefficients)
+*=(Choices - RF -> best of ensemble methods, slightly better)
+
+
+
+## ....MORE ABOUT PROCESS (?) 
+
+
+&nbsp;
+&nbsp;
+
+## Evaluation and Results
+
+### Evaluation Metrics
+
+Since I was working with regression across linear and ensemble models, I used the **Mean Squared Error** to evaluate my models.
+
+Specifically, my baseline MSE was my error for the simplest model - always predicting the training average value. I evaluated my subsequent models based on how much the MSE score was reduced compared to the baseline model.
+
+
+### Results
+
+The best-performing model gave me a 16.5% reduction in the MSE error on my test set. This model was a random forest model. 
+
+However, the best-performing highly-interpretable model, lasso linear regression, was not too far behind with a 15% reduction in the MSE error on my test set. 
+
+
+### Insights
+
+
+<img src="/images/lassorelationships.png" width="600px" align="middle">
+
+<img src="/images/lassotop10.png" width="600px" align="middle">
+
+
+
+
+
+
+## Evaluation and Results
+
+
+
+
+
+
+
+
