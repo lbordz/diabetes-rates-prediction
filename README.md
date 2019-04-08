@@ -124,10 +124,13 @@ However, the best-performing highly-interpretable model, lasso linear regression
 ### Insights
 
 
-Below are 
+The graphs below visualize the features that were the best predictors for the change in diabetes rate for each model. 
+
+(For Lasso, the best predictors are features which have the highest impact on the final prediction. For the random forest model, the best predictors are the ones that did the best job of minimizing variance in each split)
+
 <div> 
-<img src="/images/lassotop10.png" width="400px" align="left">
-<img src="/images/lassotop10.png" width="400px" align="right">
+<img src="/images/lassotop10.png" width="450px" align="left">
+<img src="/images/rftop10.png" width="450px" align="right">
 
  </div>
 
