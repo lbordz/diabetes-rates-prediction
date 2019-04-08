@@ -124,9 +124,15 @@ However, the best-performing highly-interpretable model, lasso linear regression
 ### Insights
 
 
+Below are 
+<div> 
+<img src="/images/lassotop10.png" width="400px" align="left">
+<img src="/images/lassotop10.png" width="400px" align="right">
+
+ </div>
+
 <img src="/images/lassorelationships.png" width="600px" align="middle">
 
-<img src="/images/lassotop10.png" width="600px" align="middle">
 
 
 
