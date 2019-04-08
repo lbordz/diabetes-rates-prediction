@@ -129,8 +129,8 @@ The graphs below visualize the features that were the best predictors for the ch
 (For Lasso, the best predictors are features which have the highest impact on the final prediction. For the random forest model, the best predictors are the ones that did the best job of minimizing variance in each split)
 
 <div> 
-<img src="/images/lassotop10.png" width="425px" align="left">
-<img src="/images/rftop10.png" width="425px" align="right">
+<img src="/images/lassotop10.png" width="415px" align="left">
+<img src="/images/rftop10.png" width="415px" align="right">
 
  </div>
 
