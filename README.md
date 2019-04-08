@@ -73,11 +73,12 @@ I collected US county-level population statistics from several sources to serve 
 
 ## Process Overview
 
-1 - Gather and combine data into one dataframe; Export all data into one master file for exploratory data analysis, and create separate files with training data and test-set for model selection and evaluation. 
- - The input and target data was in 9 different xlsx/csv files. I manipulated all data so it could be merged into one dataframe, with one row per county. The final dataframe had data for all 3,142 unique counties and county-equivalents (parishes, boroughs, census areas, etc) in the 50 states and District of Columbia. 
+1 - Gather above data for all 3,142 unique counties and county-equivalents (parishes, boroughs, census areas, etc) in the 50 states and District of Columbia;  combine into one dataframe, create separate training and test set files. 
  - The code for this process appears in `src/import_test_train_split.py`
 
 2 - Exploratory data analysis
+ - Scatterplot to identify any obvious trends with features; correlation graphs and 
+ - Choice: Identify highly correlated features, later remove the ones that For highly correlated features features with high orRemoved all features with high correlation above 
 (more on this bleow)
  - The code for this process appears in `XXXXX`
 
@@ -134,10 +135,61 @@ The graphs below visualize the features that were the best predictors for the ch
 
  </div>
 
+The top four features in BOTH models were:
+ - Change in Diabetes Rates 2009-2010
+ - Diabetes Rate in 2010
+ - Unemployment Rate 2010
+ - Leisure Inactivity 2010
+
+
+Here are partial dependency plots for these top 4 features, showing for both models, the general relationship between the feature values and the predicted diabetes change rate:
+
+
+
+<img src="/images/top4_relationships.png" align="center">
+
+
+Possible explanation / Interpretations:
+
+
+
+Possible I
+
+
+In addition, Any Alcohol Use and % Hispanic showed up in the top 10 of both. 
+
+
+
+
+
+
+Possible Explanations:
+
+ - The change in diabetes Rate (2009-2010) and the Diabetes rate in 2010 are likely regression towards the mean. 
+ - Feature importancee for randomf forest: We expect numeric coumsn to come up more often than classification ones
+
+
+
+
+
+
 <img src="/images/lassorelationships.png" width="600px" align="middle">
 
 
+Coefficient:
 
+Holding all other features constant:
+
+Each beta representes the increase in the predicted value of Y for a one-unit increase in the feature *after scaling*
+
+Example:
+
+2010 DB coeff = -3.64
+
+Represents a 3.64 unit DECREASE in predicted value of Y for a one-unit increase in 2010 DB *after scaling*
+
+Represents a 3.64 unit DECREASE in predicted value of Y for a 13-unit increase in
+2010 DB (before scaling).
 
 
 
@@ -145,6 +197,9 @@ The graphs below visualize the features that were the best predictors for the ch
 ## Evaluation and Results
 
 
+
+Future: Explore more faetures
+(Example, Educational e
 
 
 
