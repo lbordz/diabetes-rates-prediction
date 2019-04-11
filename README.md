@@ -180,13 +180,13 @@ Below are each of these four features, plotted against the actual change in diab
 
 ### Insights TESTING
 
-<img src="/images/top_lasso_pred.png" width="600px" align="left" style="margin:10;padding:0">
+<img src="/images/top_lasso_pred.png" width="600px" align="right" style="margin:10;padding:0">
 &nbsp;
 &nbsp;
 
-<img src="/images/top_rf_pred.png" width="600px" align="left">
+<img src="/images/top_rf_pred.png" width="600px" align="right">
 
-=&nbsp;
+&nbsp;
 &nbsp;
 
 The graphs to the right visualize the features that were the best predictors for the change in diabetes rate for each model. 
@@ -206,6 +206,8 @@ The top four features in BOTH models were:
    - Unemployment Rate 2010
    - Leisure Inactivity 2010
 
+&nbsp;
+&nbsp;
 &nbsp;
 &nbsp;
 &nbsp;
