@@ -6,7 +6,7 @@ Diabetes is a big and growing health problem in the US. About 30% of the US popu
 
 
 
-<img src="/images/US_diagnosed_diabetes_per_year.png" width="600px" align="middle">
+<img src="/images/US_diagnosed_diabetes_per_year.png" align="middle">
 
 
 
