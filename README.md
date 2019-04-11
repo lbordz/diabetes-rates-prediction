@@ -5,9 +5,13 @@
 Diabetes is a big and growing health problem in the US. About 30% of the US population currently has diabetes or prediabetes ([source](http://www.diabetes.org/assets/pdfs/basics/cdc-statistics-report-2017.pdf)) - a number that has tripled since 1990.
 
 
+&nbsp;
+&nbsp;
 
 <img src="/images/US_diagnosed_diabetes_per_year.png" align="middle">
 
+&nbsp;
+&nbsp;
 
 
 The human and economic costs associated with diabetes are high. Some examples:
