@@ -139,9 +139,17 @@ The graphs below visualize the features that were the best predictors for the ch
 
 
 <div> 
-<img src="/images/top_lasso_pred.png" width="415px" align="left">
-<img src="/images/top_rf_pred.png" width="415px" align="right">
+<img src="/images/top_lasso_pred.png" width="420px" align="left">
+<img src="/images/top_rf_pred.png" width="420px" align="right">
 </div>
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 
 The top four features in BOTH models were:
  - Change in Diabetes Rates 2009-2010
