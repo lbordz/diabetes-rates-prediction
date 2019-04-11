@@ -178,6 +178,30 @@ The top four features in BOTH models were:
 Below are each of these four features, plotted against the actual change in diabetes rate 2010 - 2013 (the target):
 
 
+### Insights
+
+<img src="/images/top_lasso_pred.png" width="420px" align="left">
+<img src="/images/top_rf_pred.png" width="420px" align="left">
+
+
+The graphs to the right visualize the features that were the best predictors for the change in diabetes rate for each model. 
+
+ - For Lasso, the best predictors are the features which have the highest weight on the final prediction.
+ - For the random forest model, the best predictors are the ones that most often did the best job of minimizing variance in each split. (Note: only the top 5 important features in the random forest model ranked better than random noise)
+
+
+The top four features in BOTH models were:
+ - Change in Diabetes Rates 2009-2010
+ - Diabetes Rate in 2010
+ - Unemployment Rate 2010
+ - Leisure Inactivity 2010
+
+
+Below are each of these four features, plotted against the actual change in diabetes rate 2010 - 2013 (the target):
+
+
+
+
 <img src="/images/top4_actual.png">
 
 
