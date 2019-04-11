@@ -139,6 +139,13 @@ The graphs below visualize the features that were the best predictors for the ch
 
 &nbsp;
 
+The top four features in BOTH models were:
+ - Change in Diabetes Rates 2009-2010
+ - Diabetes Rate in 2010
+ - Unemployment Rate 2010
+ - Leisure Inactivity 2010
+
+
 <div> 
 <img src="/images/top_lasso_pred.png" width="420px" align="left">
 <img src="/images/top_rf_pred.png" width="420px" align="right">
@@ -166,11 +173,7 @@ The graphs below visualize the features that were the best predictors for the ch
 &nbsp;
 &nbsp;
 
-The top four features in BOTH models were:
- - Change in Diabetes Rates 2009-2010
- - Diabetes Rate in 2010
- - Unemployment Rate 2010
- - Leisure Inactivity 2010
+
 
 
 Here are partial dependency plots for these top 4 features, showing for both models, the general relationship between the feature values and the predicted diabetes change rate:
