@@ -23,8 +23,27 @@ def clean_reformat_features(filepath):
 
     #state dummies
     states = _create_df_dummy_states(df, "State_master")
+    #if state dummies missing a state, add the column with all zeros
+    all_states = ['ST:_Alabama', 'ST:_Alaska', 'ST:_Arizona', 'ST:_Arkansas',
+       'ST:_California', 'ST:_Colorado', 'ST:_Connecticut', 'ST:_Delaware',
+       'ST:_District of Columbia', 'ST:_Florida', 'ST:_Georgia', 'ST:_Idaho',
+       'ST:_Illinois', 'ST:_Indiana', 'ST:_Iowa', 'ST:_Kansas', 'ST:_Kentucky',
+       'ST:_Louisiana', 'ST:_Maine', 'ST:_Maryland', 'ST:_Massachusetts',
+       'ST:_Michigan', 'ST:_Minnesota', 'ST:_Mississippi', 'ST:_Missouri',
+       'ST:_Montana', 'ST:_Nebraska', 'ST:_Nevada', 'ST:_New Hampshire',
+       'ST:_New Jersey', 'ST:_New Mexico', 'ST:_New York',
+       'ST:_North Carolina', 'ST:_North Dakota', 'ST:_Ohio', 'ST:_Oklahoma',
+       'ST:_Oregon', 'ST:_Pennsylvania', 'ST:_Rhode Island',
+       'ST:_South Carolina', 'ST:_South Dakota', 'ST:_Tennessee', 'ST:_Texas',
+       'ST:_Utah', 'ST:_Vermont', 'ST:_Virginia', 'ST:_Washington',
+       'ST:_West Virginia', 'ST:_Wisconsin', 'ST:_Wyoming', 'ST:_Hawaii']
+    for state_col in all_states:
+         if state_col not in states.columns:
+             states[state_col] = [0] * states.shape[0]
+
     df = df.join(states)
     df = _drop_cols(df, ['State_master', 'ST:_Hawaii'])
+
 
 
     #reduce ages into fewer Grps(otherwise high correlation)
@@ -72,10 +91,10 @@ def clean_reformat_features(filepath):
 
 
 if __name__ == '__main__':
-    filepath = '../data/X_train.csv'
-    X_train = clean_reformat_features(filepath)
-
-
+    filepath_X = '../data/X_train.csv'
+    X_train = clean_reformat_features(filepath_X)
+    filepath_y = '../data/y_train.csv'
+    y_train = pd.read_csv(filepath_y)
 
 '''
 

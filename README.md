@@ -1,4 +1,4 @@
-# Predicting the County-Level Change in Diabetes Rates Over a 3-Year Period
+# Predicting the 3-Year Change in Diabetes Rates at the County Level
 
 ## Context
 
@@ -19,7 +19,7 @@ The human and economic costs associated with diabetes are high. Some examples:
 
 Type 2 diabetes, which generally onsets in adulthood, accounts for 95% of all cases. Research indicates that type 2 diabetes is caused by a combination of genetics and lifestyle factors. However, there are many reasons why people do not or cannot maintain lifestyles that optimally promote their health. 
 
-**Government policies are one of the tools we have to enact wide-spread change to curb diabetes. However, what policies should we enact? And what locations should be prioritize?**
+**Government policies are one of the tools we have to enact wide-spread change to curb diabetes. However, where should we focus on enacting these polcies?**
  
 
 &nbsp;
@@ -28,18 +28,53 @@ Type 2 diabetes, which generally onsets in adulthood, accounts for 95% of all ca
 ## My Project Goal
 
 
-**Predict how much the diabetes rate for specific geographic population will change in 3 years.**
+**Predict how much the diabetes rates for specific geographic populations will change in 3 years.**
 
-Specifically: I will use county-level population data available in 2010 and prior to predict the percent change in the diabetes rate in each county from 2010-2013. 
+Specifically: I will use county-level population data available in 2010 to predict the how much the diabetes rate increased or decresed by 2013. 
 
-*Why?*  If we can correctly predict which geographic areas are likely to see the highest growth in diabe tes rates, and understand some of the contributing factors, we can gain insight into what types of government policies we should enact, and where. 
+*Why?*  If we can correctly predict which geographic areas are likely to see the highest growth in diabetes rates, we can gain insight into where we should focus on enacting government policies. 
+
+
+&nbsp;
+&nbsp;
+
+## Overview: My Process & Git Repository
+
+ - **Step 1:** 
+Gather data from 9 difference sources for all 3,142 unique counties and county-equivalents (parishes, boroughs, census areas, etc) in the 50 U.S. states; clean and format for consistency
+   - The code for this process appears in `src/_import_data.py` ([view](https://github.com/lbordz/diabetes-rates-prediction/blob/master/src/_import_data.py))
+
+
+ - **Step 2:**
+Merge all data into one dataframe, 
+combine into one dataframe, create target colum, create separate training and test set files. 
+   - The code for this process appears in `src/import_test_train_split.py` ([view](https://github.com/lbordz/diabetes-rates-prediction/blob/master/src/import_train_test_split.py))
+&nbsp;
+
+
+ - **Step 3:**
+Exploratory data analysis: explore initial feature trends, investigate outliers, clean data, remove highly correlated features, and added featurization. 
+   - The code for final data cleaning and featurization appears in `src/_data_cleaning.py` ([view](https://github.com/lbordz/diabetes-rates-prediction/blob/master/src/_data_cleaning.py))
+&nbsp;
+
+
+ - **Step 4:**
+Model Selection: Explore both interpretable and less interpretable models (Goal of that: to get insights on predictive features, but not sarifice performance). Find model(s) that best improve prediction error compared to baseline; model tuning.
+   - The code for my final model in `src/model.py` ([view](https://github.com/lbordz/diabetes-rates-prediction/blob/master/src/model.py))
+&nbsp;
+
+
+ - **Step 5:** 
+Explore top predictors of my model(s), visualized to understand relationships. 
+   - The code for all my graphs in `<to be added>` ([view]())
 
 
 
 &nbsp;
 &nbsp;
 
-## Data
+
+## Data (Input)
 
 I collected US county-level population statistics from several sources to serve as inputs to my model. 
 
@@ -67,59 +102,31 @@ I collected US county-level population statistics from several sources to serve 
       - Low access defined as 1+ miles away from a store in urban areas, 10+ miles away in rural areas 
 
 
-
 &nbsp;
 &nbsp;
 
-## Process Overview
-
-1 - Gather above data for all 3,142 unique counties and county-equivalents (parishes, boroughs, census areas, etc) in the 50 states and District of Columbia;  combine into one dataframe, create separate training and test set files. 
- - The code for this process appears in `src/import_test_train_split.py`
-
-2 - Exploratory data analysis
- - Scatterplot to identify any obvious trends with features; correlation graphs and 
- - Choice: Identify highly correlated features, later remove the ones that For highly correlated features features with high orRemoved all features with high correlation above 
-(more on this bleow)
- - The code for this process appears in `XXXXX`
-
-3 - Model Selection
-(more on this below)
- - The code for this process appears in `XXXXX`
-
-4 - Model Insights
-(more on this bleow)
- - The code for this process appears in `XXXXX`
+## Results (Output)
 
 
 
-- How did you go about solving your problem? What choices did you make?
-(Choices - make missing values average - so few missing)
-(Choices - knowing using lasso and looking at feature importance, didnt want highly correlated vaiables. So I noted which ones higly correlated, saw which one performed better, thats it)
-(Choices -Lasso--> made some zero, performed better, also at same performance (basically), fewer features with higher coefficients)
-*=(Choices - RF -> best of ensemble methods, slightly better)
 
-
-
-## ....MORE ABOUT PROCESS (?) 
-
-
-&nbsp;
-&nbsp;
-
-## Evaluation and Results
 
 ### Evaluation Metrics
 
 Since I was working with regression across linear and ensemble models, I used the **Mean Squared Error** to evaluate my models.
 
-Specifically, my baseline MSE was my error for the simplest model - always predicting the training average value. I evaluated my subsequent models based on how much the MSE score was reduced compared to the baseline model.
+Specifically, my baseline RMSE was my error for the simplest model - always predicting the training average value. I evaluated my subsequent models based on how much the RMSE score was reduced compared to the baseline model.
+
+The RMSE of my baseline was 12.1 PP (Percentage Points).
 
 
 ### Results
 
-The best-performing model gave me a 16.5% reduction in the MSE error on my test set. This model was a random forest model. 
+My best-performing model gave me an MSE of 11.1 PP - an 8.6% reduction in the baseline RMSE. This model was a random forest model, with additional parameters set to prune the trees to prevent overfitting.
 
-However, the best-performing highly-interpretable model, lasso linear regression, was not too far behind with a 15% reduction in the MSE error on my test set. 
+However, the best-performing highly-interpretable model, lasso linear regression, was not too far behind with a 11.2 PP RMSE, which translates to a 7.8% reduction in the RMSE of my baseline model.
+
+I leveraged both models to find insights. 
 
 
 ### Insights
@@ -127,13 +134,14 @@ However, the best-performing highly-interpretable model, lasso linear regression
 
 The graphs below visualize the features that were the best predictors for the change in diabetes rate for each model. 
 
-(For Lasso, the best predictors are features which have the highest impact on the final prediction. For the random forest model, the best predictors are the ones that did the best job of minimizing variance in each split)
+ - For Lasso, the best predictors are the features which have the highest weight on the final prediction.
+ - For the random forest model, the best predictors are the ones that most often did the best job of minimizing variance in each split. (Note: only the top 5 important features in the random forest model ranked better than random noise)
+
 
 <div> 
-<img src="/images/lassotop10.png" width="415px" align="left">
-<img src="/images/rftop10.png" width="415px" align="right">
-
- </div>
+<img src="/images/top_lasso_pred.png" width="415px" align="left">
+<img src="/images/top_rf_pred" width="415px" align="right">
+</div>
 
 The top four features in BOTH models were:
  - Change in Diabetes Rates 2009-2010
@@ -143,7 +151,6 @@ The top four features in BOTH models were:
 
 
 Here are partial dependency plots for these top 4 features, showing for both models, the general relationship between the feature values and the predicted diabetes change rate:
-
 
 
 <img src="/images/top4_relationships.png" align="center">
@@ -194,7 +201,7 @@ Represents a 3.64 unit DECREASE in predicted value of Y for a 13-unit increase i
 
 
 
-## Evaluation and Results
+## The Future
 
 
 
