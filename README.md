@@ -8,7 +8,7 @@ Diabetes is a big and growing health problem in the US. About 30% of the US popu
 &nbsp;
 &nbsp;
 
-<img src="/images/US_diagnosed_diabetes_per_year.png" align="middle">
+<kbd><img src="/images/US_diagnosed_diabetes_per_year.png" align="middle"></kbd>
 
 &nbsp;
 &nbsp;
@@ -136,22 +136,21 @@ I leveraged both models to find insights.
 
 ### Insights TESTING
 
+The graphs below visualize the features that were the best predictors for the change in diabetes rate for each model. 
+
+   - For Lasso, the best predictors are the features which have the highest weight on the final prediction.
+   - For the random forest model, the best predictors are the ones that most often did the best job of minimizing variance in each split. (Note: only the top 5 important features in the random forest model ranked better than random noise)
+
+
+
+
 <kbd><img src="/images/top_lasso_pred.png" width="600px" align="right" style="margin:10;padding:0"></kbd>
 &nbsp;
 &nbsp;
 
 <kbd><img src="/images/top_rf_pred.png" width="600px" align="right"></kbd>
 
-
-The graphs to the right visualize the features that were the best predictors for the change in diabetes rate for each model. 
-
-   - For Lasso, the best predictors are the features which have the highest weight on the final prediction.
-   - For the random forest model, the best predictors are the ones that most often did the best job of minimizing variance in each split. (Note: only the top 5 important features in the random forest model ranked better than random noise)
-
 &nbsp;
-&nbsp;
-&nbsp;
-
 
 
 The top four features in BOTH models were:
@@ -163,11 +162,7 @@ The top four features in BOTH models were:
 &nbsp;
 &nbsp;
 &nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
+
 
 
 
