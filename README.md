@@ -66,7 +66,7 @@ Model Selection: Explore both interpretable and less interpretable models (Goal 
 
  - **Step 5:** 
 Explore top predictors of my model(s), visualized to understand relationships. 
-   - The code for all my graphs in `<to be added>` ([view]())
+   - The code for all my graphs in `src/plots.py` ([view](https://github.com/lbordz/diabetes-rates-prediction/blob/master/src/plots.py))
 
 
 
@@ -185,73 +185,27 @@ And again, here are each of these same four features, plotted against the actual
 
 And finally, here are the average predictions for those same four features, zoomed in so you can better see the relationships of the predictions for each model:
 
-<img src="top4_prediction.png">
+<img src="/images/top4_prediction.png">
 
 
 ### Takeaways:
 
 
 
-
-Here are the 
-
-Here are partial dependency plots for these top 4 features, showing for both models, the general relationship between the feature values and the predicted diabetes change rate:
-
-
-<img src="/images/top4_relationships.png" align="center">
+ - The inverse relationships between both the the Change in Diabetes Rate (2009-2010) and the 2010 Diabetes Rate and the target likely represent regression towards the mean. 
+ - The relationships of leisure inactivity and employment rates to the target may be more along the lines of what we expect, but we cannot presume causality. Therefore, while interesting, these relationships do not have implications for the *types* of policies to implement.
+ - Despite the fact that my model did pick out some signals, my data is mostly noise.  If there are other hidden factors that impact rise or fall in diabetes rates, my data isn’t picking up on it.
 
 
-Possible explanation / Interpretations:
-
-
-
-Possible I
-
-
-In addition, Any Alcohol Use and % Hispanic showed up in the top 10 of both. 
-
-
-
-
-
-
-Possible Explanations:
-
- - The change in diabetes Rate (2009-2010) and the Diabetes rate in 2010 are likely regression towards the mean. 
- - Feature importancee for randomf forest: We expect numeric coumsn to come up more often than classification ones
-
-
-
-
-
-
-
-
-Coefficient:
-
-Holding all other features constant:
-
-Each beta representes the increase in the predicted value of Y for a one-unit increase in the feature *after scaling*
-
-Example:
-
-2010 DB coeff = -3.64
-
-Represents a 3.64 unit DECREASE in predicted value of Y for a one-unit increase in 2010 DB *after scaling*
-
-Represents a 3.64 unit DECREASE in predicted value of Y for a 13-unit increase in
-2010 DB (before scaling).
-
-
-
-
-## The Future
-
-
-
-Future: Explore more faetures
-(Example, Educational e
-
+### Possible Future Iterations:
+ - Experiment with other years 
+   - For example: Will these models perform similarly when using 2013 dat to predict the change in diabetes rate in 2016?
+ - Biometric data 
+   - One big blind spot to this model is how the Diagnosed Diabetes Rate is calculated. It's survey-based, which means that numbers of people with diagnosed diabetes is based on self-reporting. But people may not know they have diabetes, speciically people without access to health insurance who tend to live in poorer communities. So the diabetes rate is probably underrreporting diabetes rates specifically or the people who are most succeseptible. A better metric would be blood-sugar levels. 
+- Additional features. For example:
+  - Education-level data
+  - More medical data such as hypertension rates or blood pressure
+  - Data that is a better proxy for how people *consume* foods, such as liters of soda sold per capita.
 
 
 
