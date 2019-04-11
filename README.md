@@ -180,14 +180,13 @@ Below are each of these four features, plotted against the actual change in diab
 
 ### Insights TESTING
 
-<img src="/images/top_lasso_pred.png" width="500px" align="left" style="margin:10;padding:0">
+<img src="/images/top_lasso_pred.png" width="600px" align="left" style="margin:10;padding:0">
 &nbsp;
 &nbsp;
 
-<img src="/images/top_rf_pred.png" width="500px" align="left">
+<img src="/images/top_rf_pred.png" width="600px" align="left">
 
-&nbsp;
-&nbsp;
+=&nbsp;
 &nbsp;
 
 The graphs to the right visualize the features that were the best predictors for the change in diabetes rate for each model. 
