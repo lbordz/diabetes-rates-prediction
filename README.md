@@ -138,13 +138,20 @@ The graphs below visualize the features that were the best predictors for the ch
  - For the random forest model, the best predictors are the ones that most often did the best job of minimizing variance in each split. (Note: only the top 5 important features in the random forest model ranked better than random noise)
 
 &nbsp;
-&nbsp;
 
 <div> 
 <img src="/images/top_lasso_pred.png" width="420px" align="left">
 <img src="/images/top_rf_pred.png" width="420px" align="right">
 </div>
 
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 &nbsp;
 &nbsp;
 &nbsp;
