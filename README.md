@@ -162,11 +162,7 @@ The graphs below visualize the features that were the best predictors for the ch
 &nbsp;
 &nbsp;
 &nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
 
-- - -
 
 The top four features in BOTH models were:
  - Change in Diabetes Rates 2009-2010
@@ -175,6 +171,29 @@ The top four features in BOTH models were:
  - Leisure Inactivity 2010
 
 
+Below are each of these four features, plotted against the actual change in diabetes rate 2010 - 2013 (the target):
+
+
+<img src="/images/top4_actual.png">
+
+
+And again, here are each of these same four features, plotted against the actual change in diabetes rate 2010 - 2013 (the target), with additional lines for the average prediction for each of the models:
+
+
+<img src="/images/top4_actual_and_prediction.png">
+
+
+And finally, here are the average predictions for those same four features, zoomed in so you can better see the relationships of the predictions for each model:
+
+<img src="top4_prediction.png">
+
+
+### Takeaways:
+
+
+
+
+Here are the 
 
 Here are partial dependency plots for these top 4 features, showing for both models, the general relationship between the feature values and the predicted diabetes change rate:
 
@@ -206,7 +225,6 @@ Possible Explanations:
 
 
 
-<img src="/images/lassorelationships.png" width="600px" align="middle">
 
 
 Coefficient:
