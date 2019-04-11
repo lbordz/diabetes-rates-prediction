@@ -178,10 +178,10 @@ The top four features in BOTH models were:
 Below are each of these four features, plotted against the actual change in diabetes rate 2010 - 2013 (the target):
 
 
-### Insights
+### Insights TESTING
 
-<img src="/images/top_lasso_pred.png" width="420px" align="left">
-<img src="/images/top_rf_pred.png" width="420px" align="left">
+<img src="/images/top_lasso_pred.png" width="500px" align="left">
+<img src="/images/top_rf_pred.png" width="500px" align="left">
 
 
 The graphs to the right visualize the features that were the best predictors for the change in diabetes rate for each model. 
