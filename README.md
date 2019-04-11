@@ -140,7 +140,7 @@ The graphs below visualize the features that were the best predictors for the ch
 
 <div> 
 <img src="/images/top_lasso_pred.png" width="415px" align="left">
-<img src="/images/top_rf_pred" width="415px" align="right">
+<img src="/images/top_rf_pred.png" width="415px" align="right">
 </div>
 
 The top four features in BOTH models were:
