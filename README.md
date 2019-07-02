@@ -198,7 +198,7 @@ And finally, here are the average predictions for those same four features, zoom
  - Experiment with other years 
    - For example: Will these models perform similarly when using 2013 dat to predict the change in diabetes rate in 2016?
  - Biometric data 
-   - One big blind spot to this model is how the Diagnosed Diabetes Rate is calculated. It's survey-based, which means that numbers of people with diagnosed diabetes is based on self-reporting. But people may not know they have diabetes, speciically people without access to health insurance who tend to live in poorer communities. So the diabetes rate is probably underrreporting diabetes rates specifically or the people who are most succeseptible. A better metric would be blood-sugar levels. 
+   - One big blind spot to this model is how the Diagnosed Diabetes Rate is calculated. It's survey-based, which means that numbers of people with diagnosed diabetes is based on self-reporting. But people may not know they have diabetes, specifically people without access to health insurance who tend to live in poorer communities. So the diabetes rate is probably underreporting diabetes rates specifically for the people who are most succeseptible. A better metric would be blood-sugar levels. 
 - Additional features. For example:
   - Education-level data
   - More medical data such as hypertension rates or blood pressure
