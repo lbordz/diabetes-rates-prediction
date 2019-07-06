@@ -16,25 +16,35 @@ class Diabetes_Rate_Model():
         self.mse_avg = None
 
     def fit_linear(self, X_train, y_train):
-        self.X_train = X_train
+        try:
+            self.X_train = X_train.drop("FIPS_master", axis = 1)
+        except:
+            self.X_train = X_train
         self.y_train = y_train
-
-        self.scalar.fit(X_train)
-        self.X_train_scaled = self.scalar.transform(X_train)
+        #print (self.X_train.shape)
+        self.scalar.fit(self.X_train)
+        self.X_train_scaled = self.scalar.transform(self.X_train)
         self.modellinear.fit(self.X_train_scaled, self.y_train)
         if not self.mse_avg:
-            yavg = self.y_train.mean()
-            y_pred_avg = np.array([yavg] * self.X_train.shape[0])
-            self.mse_avg = mean_squared_error(y_train, y_pred_avg)
+             yavg = self.y_train.mean()
+             y_pred_avg = np.array([yavg] * self.X_train.shape[0])
+             self.mse_avg = mean_squared_error(y_train, y_pred_avg)
 
 
     def predict_linear(self, X):
+        try:
+            X = X.drop("FIPS_master", axis = 1)
+        except:
+            pass
         X_scaled = self.scalar.transform(X)
         return self.modellinear.predict(X_scaled)
 
 
     def fit_ensemble(self, X_train, y_train):
-        self.X_train = X_train
+        try:
+            self.X_train = X_train.drop("FIPS_master", axis = 1)
+        except:
+            self.X_train = X_train
         self.y_train = y_train
         self.modelensemble.fit(self.X_train, self.y_train)
         if not self.mse_avg:
@@ -43,6 +53,10 @@ class Diabetes_Rate_Model():
             self.mse_avg = mean_squared_error(y_train, y_pred_avg)
 
     def predict_ensemble(self, X):
+        try:
+            X = X.drop("FIPS_master", axis = 1)
+        except:
+            pass
         return self.modelensemble.predict(X)
 
     def mse(self, y_true, y_pred):
