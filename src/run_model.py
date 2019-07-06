@@ -28,10 +28,11 @@ if __name__ == '__main__':
 
     #print scores
 
-    linear_mse = model.mse(y_test, pred_linear)
-    ensemble_mse = model.mse(y_test, pred_ensemble)
-    print (f"Linear MSE on test set: {linear_mse}, {model.mse_pct_improvement(y_test,pred_linear )} change from baseline")
-    print (f"Ensemble MSE on test set: {ensemble_mse}, {model.mse_pct_improvement(y_test,pred_ensemble )} change improvement from baseline")
+    linear_rmse = model.rmse(y_test, pred_linear)
+    ensemble_rmse = model.rmse(y_test, pred_ensemble)
+    print (f"RMSE of baseline (guess average): {model.rmse_avg}")
+    print (f"Linear RMSE on test set: {linear_rmse}, {model.rmse_pct_improvement(y_test,pred_linear )} change from baseline")
+    print (f"Ensemble RMSE on test set: {ensemble_rmse}, {model.rmse_pct_improvement(y_test,pred_ensemble )} change from baseline")
 
 
 
