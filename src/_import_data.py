@@ -11,14 +11,14 @@ from bs4 import BeautifulSoup
 #----- SUPPORTING FUNCTIONS-----#
 
 
-#Function to import diabetes, leisure inactiity, and obesity data
 
 def _import_CDC_data(filepath, abbr):
 
     '''
+    Purpose of this function: To import diabetes, leisure inactiity, and obesity data (all CDC)
+
     filepath: string, path to raw data file
     abbr: string, 2-3 letters to use to abbreviate data type
-    cols: list of all columns needed for model and/or to create new features
     '''
 
     #import data
@@ -70,7 +70,7 @@ def _remove_county_suffix(x):
 
 def _create_ctynameshort(df, original_column):
     '''
-    creates a new column called "ctynameshort" in the dataframe that can be matched with the same colume in the fips datafram
+    creates a new column called "ctynameshort" in the dataframe that can be matched with the same column in the fips dataframe
     '''
     df["ctynameshort"] = df[original_column].apply(_remove_county_suffix)
     df['ctynameshort'] = df['ctynameshort'].apply(_lower_char_only)
