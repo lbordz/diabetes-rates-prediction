@@ -95,17 +95,3 @@ if __name__ == '__main__':
     X_train = clean_reformat_features(filepath_X)
     filepath_y = '../data/y_train.csv'
     y_train = pd.read_csv(filepath_y)
-
-'''
-
-
-
-def scale_data()
-scalar = StandardScaler()
-
-
-#SCALE!
-
-FOR MODEL FIT / TRNAFORMS --> MUST SCALE DATA THERE!!!!! (BC MUST BE FIT TO TRIAN)
-
-'''
