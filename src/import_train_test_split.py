@@ -67,7 +67,7 @@ merged_df['Diabetes_pct_growth_rate'] = ((merged_df["DB:2013:percent"] - merged_
 
 #removing duplicative columns
 #including
-desired_merged_columns = ['State_master', 'FIPS_master', 'County_master', 'DB:2009:percent', 'DB:2010:percent', 'TOT_POP',
+desired_merged_columns = ['FIPS_master', 'State_master', 'County_master', 'DB:2009:percent', 'DB:2010:percent', 'TOT_POP',
         'TOT_MALE', 'WAC_MALE', 'WAC_FEMALE', 'BAC_MALE',
        'BAC_FEMALE', 'IAC_MALE', 'IAC_FEMALE', 'AAC_MALE', 'AAC_FEMALE',
        'NAC_MALE', 'NAC_FEMALE', 'H_MALE', 'H_FEMALE', 'AgeGrp01:0-4:2010',
@@ -89,7 +89,7 @@ merged_df.to_csv('../data/ALL_MERGED_DATA.csv', index = False)
 
 #  --- TRAIN TEST  SPLIT  ---
 
-X = merged_df.drop(['Diabetes_pct_growth_rate', 'FIPS_master', 'County_master'], axis = 1)
+X = merged_df.drop(['Diabetes_pct_growth_rate', 'County_master'], axis = 1)
 y = merged_df['Diabetes_pct_growth_rate']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=30)
