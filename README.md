@@ -64,7 +64,8 @@ Exploratory data analysis: explore initial feature trends, investigate outliers,
 
  - **Step 4:**
 Model Selection: Explore both interpretable and less interpretable models (Goal of that: to get insights on predictive features, but not sarifice performance). Find model(s) that best improve prediction error compared to baseline; model tuning.
-   - The code for my final model in `src/model.py` ([view](https://github.com/lbordz/diabetes-rates-prediction/blob/master/src/model.py))
+   - The code for my final model class in `src/model.py` ([view](https://github.com/lbordz/diabetes-rates-prediction/blob/master/src/model.py))
+    - The code for running the models on my test set in `src/run_model.py` ([view](https://github.com/lbordz/diabetes-rates-prediction/blob/master/src/run_model.py))
 &nbsp;
 
 
@@ -117,16 +118,24 @@ I collected US county-level population statistics from several sources to serve 
 
 ### Evaluation Metrics
 
-Since I was working with regression across linear and ensemble models, I used the **Mean Squared Error** to evaluate my models.
+Since I was working with regression across linear and ensemble models, I used the **Root Mean Squared Error** to evaluate my models.
 
 Specifically, my baseline RMSE was my error for the simplest model - always predicting the training average value. I evaluated my subsequent models based on how much the RMSE score was reduced compared to the baseline model.
 
-The RMSE of my baseline was 12.1 PP (Percentage Points).
+The RMSE on my test data with my baseline model was 12.1 PP (Percentage Points). For reference, most the distribution of the actual target values were from -30% to about 60%, with most values falling between -10% change and 15% change.
+
+<kbd><img src="/images/target_histogram.png" width="600px" align="right" style="margin:10;padding:0"></kbd>
+
+
+### Evaluation Metrics
+
+Since I was working with regression across linear and ensemble models, I used the **Root Mean Squared Error** to evaluate my models.
+
 
 
 ### Results
 
-My best-performing model gave me an MSE of 11.1 PP - an 8.6% reduction in the baseline RMSE. This model was a random forest model, with additional parameters set to prune the trees to prevent overfitting.
+My best-performing model gave me an RMSE of 11.1 PP - an 8.6% reduction in the baseline RMSE. This model was a random forest model, with additional parameters set to prune the trees to prevent overfitting.
 
 However, the best-performing highly-interpretable model, lasso linear regression, was not too far behind with a 11.2 PP RMSE, which translates to a 7.8% reduction in the RMSE of my baseline model.
 
@@ -134,7 +143,7 @@ I leveraged both models to find insights.
 
 
 
-### Insights TESTING
+### Insights
 
 The graphs below visualize the features that were the best predictors for the change in diabetes rate for each model. 
 
