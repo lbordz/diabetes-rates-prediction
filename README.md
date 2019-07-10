@@ -127,10 +127,6 @@ The RMSE on my test data with my baseline model was 12.1 PP (Percentage Points).
 <kbd><img src="/images/target_histogram.png" width="600px" align="right" style="margin:10;padding:0"></kbd>
 
 
-### Evaluation Metrics
-
-Since I was working with regression across linear and ensemble models, I used the **Root Mean Squared Error** to evaluate my models.
-
 
 
 ### Results
