@@ -23,7 +23,7 @@ The human and economic costs associated with diabetes are high. Some examples:
 
 Type 2 diabetes, which generally onsets in adulthood, accounts for 95% of all cases. Research indicates that type 2 diabetes is caused by a combination of genetics and lifestyle factors. However, there are many reasons why people do not or cannot maintain lifestyles that optimally promote their health. 
 
-**Government policies are one of the tools we have to enact wide-spread change to curb diabetes. However, where should we focus on enacting these polcies?**
+**Government policies are one of the tools we have to enact wide-spread change to curb diabetes. However, where should we focus on enacting these policies?**
  
 
 &nbsp;
